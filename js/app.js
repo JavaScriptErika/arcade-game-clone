@@ -2,6 +2,8 @@
 const Enemy = function (x, y) {
     this.x = x;
     this.y = y;
+    this.width = 80;
+    this.height = 50;
     //returns a number between 50 and 250
     this.speed = Math.floor(Math.random() * 250) + 50;
 
@@ -27,6 +29,8 @@ const Player = function () {
     this.sprite = 'images/char-cat-girl.png';
     this.x = 200;
     this.y = 400;
+    this.width = 50;
+    this.height = 50;
 };
 
 Player.prototype.update = function (dt) {
@@ -34,6 +38,9 @@ Player.prototype.update = function (dt) {
     this.y < -30 || this.y > 400 ? this.y = 400 : null;
     this.x >= 400 ? this.x = 400 : null;
     this.x < 0 ? this.x = 0 : null;
+
+    this.collision();
+
 };
 
 Player.prototype.render = function () {
@@ -47,9 +54,24 @@ Player.prototype.handleInput = function (key) {
     key === "left" ? this.x -= 100 : null;
 }
 
+/*
+2D Collision detection is modified from
+https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+*/
+Player.prototype.collision = function () {
+    allEnemies.forEach(enemy => {
+        if (this.x < enemy.x + enemy.width &&
+            this.x + this.width > enemy.x &&
+            this.y < enemy.y + enemy.height &&
+            this.height + this.y > enemy.y) {
+            this.y = 400;
+            this.x = 200;
+        }
+    });
+}
 
 const player = new Player();
-const allEnemies = [new Enemy(-150, 225), new Enemy(-150, 140), new Enemy(-150, 60)]
+const allEnemies = [new Enemy(-150, 225), new Enemy(-150, 140), new Enemy(-150, 60)];
 
 
 /*
