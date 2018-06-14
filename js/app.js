@@ -7,13 +7,13 @@ const Enemy = function (x, y) {
     //returns a number between 50 and 250
     this.speed = Math.floor(Math.random() * 250) + 50;
 
-    // The image/sprite for our enemies, this uses
-    // a helper to load images
+    /* The image/sprite for our enemies, this uses
+    a helper to load images */
     this.sprite = 'images/enemy-bug.png';
 };
 
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+/* Update the enemy's position, required method for game
+ Parameter: dt, a time delta between ticks */
 Enemy.prototype.update = function (dt) {
     this.x += this.speed * dt;
     this.x >= 600 ? this.x = -150 : null;
@@ -35,23 +35,23 @@ const Player = function () {
 
 Player.prototype.update = function (dt) {
     //Keeps player on screen
-    this.y < -30 || this.y > 400 ? this.y = 400 : null;
-    this.x >= 400 ? this.x = 400 : null;
+    this.y === -25 || this.y > 400 ? this.reset('y') : null;
+    this.x >= 400 ? this.reset('x') : null;
     this.x < 0 ? this.x = 0 : null;
 
     this.collision();
 
 };
 
-Player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+//Resets player position to starting point
+Player.prototype.reset = function (position) {
+    if (this.y === -25) {
+        var element = document.createElement('div');
+        element.innerHTML = "You won!"
+        document.body.appendChild(element)
+    }
 
-Player.prototype.handleInput = function (key) {
-    key === "up" ? this.y -= 85 : null;
-    key === "down" ? this.y += 85 : null;
-    key === "right" ? this.x += 100 : null;
-    key === "left" ? this.x -= 100 : null;
+    position === 'y' ? this.y = 400 : this.x = 400;
 }
 
 /*
@@ -69,6 +69,20 @@ Player.prototype.collision = function () {
         }
     });
 }
+
+Player.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// moves player according to input by number of pixels
+Player.prototype.handleInput = function (key) {
+    key === "up" ? this.y -= 85 : null;
+    key === "down" ? this.y += 85 : null;
+    key === "right" ? this.x += 100 : null;
+    key === "left" ? this.x -= 100 : null;
+}
+
+
 
 const player = new Player();
 const allEnemies = [new Enemy(-150, 225), new Enemy(-150, 140), new Enemy(-150, 60)];
