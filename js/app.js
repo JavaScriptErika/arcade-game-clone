@@ -54,10 +54,10 @@ Player.prototype.reset = function (position) {
 //Displays a message for 1 second when player wins
 Player.prototype.won = function () {
     const element = document.createElement('div');
-    element.innerHTML = "You won!"
-    element.classList.add("winning-msg")
-    document.body.appendChild(element)
-    setTimeout(function () { document.body.removeChild(element) }, 1000)
+    element.innerHTML = 'You won!';
+    element.classList.add('winning-msg');
+    document.body.appendChild(element);
+    setTimeout(function () { document.body.removeChild(element) }, 1000);
 }
 
 /*
@@ -82,10 +82,10 @@ Player.prototype.render = function () {
 
 // moves player according to input by number of pixels
 Player.prototype.handleInput = function (key) {
-    key === "up" ? this.y -= 85 : null;
-    key === "down" ? this.y += 85 : null;
-    key === "right" ? this.x += 100 : null;
-    key === "left" ? this.x -= 100 : null;
+    key === 'up' ? this.y -= 85 : null;
+    key === 'down' ? this.y += 85 : null;
+    key === 'right' ? this.x += 100 : null;
+    key === 'left' ? this.x -= 100 : null;
 }
 
 
