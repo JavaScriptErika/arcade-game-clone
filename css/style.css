@@ -1,3 +1,8 @@
 body {
     text-align: center;
 }
+
+.winning-msg {
+    font-size: 2rem;
+    color: blue;
+}

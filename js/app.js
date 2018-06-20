@@ -43,15 +43,21 @@ Player.prototype.update = function (dt) {
 
 };
 
-//Resets player position to starting point
-Player.prototype.reset = function (position) {
-    if (this.y === -25) {
-        var element = document.createElement('div');
-        element.innerHTML = "You won!"
-        document.body.appendChild(element)
-    }
 
+Player.prototype.reset = function (position) {
+    //When player makes it to the edge, call player's won function
+    this.y === -25 ? this.won() : null;
+    //Resets player position to starting point
     position === 'y' ? this.y = 400 : this.x = 400;
+}
+
+//Displays a message for 1 second when player wins
+Player.prototype.won = function () {
+    const element = document.createElement('div');
+    element.innerHTML = "You won!"
+    element.classList.add("winning-msg")
+    document.body.appendChild(element)
+    setTimeout(function () { document.body.removeChild(element) }, 1000)
 }
 
 /*
